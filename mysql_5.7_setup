@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#Script that delete any current version of mysql and its data and install mysql_5.7
+#Write by: Kevin Giraldo
+service mysql stop
+killall -KILL mysql mysqld_safe mysqld
+apt-get purge mysql-server mysql-client
+apt-get autoremove --purge
+sudo apt-get remove --purge *mysql\*
+sudo apt-get autoremove
+deluser --remove-home mysql
+delgroup mysql
+rm -rf /etc/apparmor.d/abstractions/mysql /etc/apparmor.d/cache/usr.sbin.mysqld /etc/mysql /var/lib/mysql /var/log/mysql* /var/log/upstart/mysql.log* /var/run/mysqld
+rm ~/.mysql_history
+sudo apt-get autoclean
+mkdir mysql_setup
+wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-server_5.7.28-1ubuntu19.04_amd64.deb-bundle.tar
+mv mysql-server_5.7.28-1ubuntu19.04_amd64.deb-bundle.tar mysql_setup/
+cd mysql_setup/
+tar -xvf mysql-server_5.7.28-1ubuntu19.04_amd64.deb-bundle.tar
+rm -rf mysql-testsuite_5.7.28-1ubuntu19.04_amd64.deb mysql-community-test_5.7.28-1ubuntu19.04_amd64.deb
+dpkg -i mysql-*.deb
+cd ..
+rm -rf mysql_setup
+apt --fix-broken install
+/etc/init.d/mysql start
+/etc/init.d/mysql status
+mysql --version
+exit
