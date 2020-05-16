@@ -22,6 +22,11 @@ dpkg -i mysql-*.deb
 cd ..
 rm -rf mysql_setup
 apt --fix-broken install
+apt-get install python3-dev
+apt-get install libmysqlclient-dev
+apt-get install zlib1g-dev
+pip3 install mysqlclient
+pip3 install SQLAlchemy==1.2.5
 /etc/init.d/mysql start
 /etc/init.d/mysql status
 mysql --version
