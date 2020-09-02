@@ -3,15 +3,15 @@
 #Write by: Kevin Giraldo
 service mysql stop
 killall -KILL mysql mysqld_safe mysqld
-apt-get purge mysql-server mysql-client
-apt-get autoremove --purge
-sudo apt-get remove --purge *mysql\*
-sudo apt-get autoremove
+apt-get -y purge mysql-server mysql-client
+apt-get -y autoremove --purge
+apt-get -y remove --purge *mysql\*
+apt-get -y autoremove
 deluser --remove-home mysql
 delgroup mysql
 rm -rf /etc/apparmor.d/abstractions/mysql /etc/apparmor.d/cache/usr.sbin.mysqld /etc/mysql /var/lib/mysql /var/log/mysql* /var/log/upstart/mysql.log* /var/run/mysqld
 rm ~/.mysql_history
-sudo apt-get autoclean
+apt-get -y autoclean
 mkdir mysql_setup
 wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-server_5.7.28-1ubuntu19.04_amd64.deb-bundle.tar
 mv mysql-server_5.7.28-1ubuntu19.04_amd64.deb-bundle.tar mysql_setup/
@@ -21,10 +21,10 @@ rm -rf mysql-testsuite_5.7.28-1ubuntu19.04_amd64.deb mysql-community-test_5.7.28
 dpkg -i mysql-*.deb
 cd ..
 rm -rf mysql_setup
-apt --fix-broken install
-apt-get install python3-dev
-apt-get install libmysqlclient-dev
-apt-get install zlib1g-dev
+apt -y --fix-broken install
+apt-get -y install python3-dev
+apt-get -y install libmysqlclient-dev
+apt-get -y install zlib1g-dev
 pip3 install mysqlclient
 pip3 install SQLAlchemy==1.2.5
 /etc/init.d/mysql start
